@@ -1,5 +1,3 @@
-from ast import If
-import json
 import os
 from fastapi import FastAPI
 
@@ -7,8 +5,9 @@ app = FastAPI()
 
 
 @app.get("/")
-async def root():
-    return {"root": "ok"}
+async def home_root():
+    return {"home_root": "ok"}
+
 
 @app.get("/api")
 async def api():
@@ -21,6 +20,7 @@ async def api():
     }
 
     return api_values
+
 
 @app.get("/status")
 async def status():
