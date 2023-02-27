@@ -2,22 +2,23 @@ from fastapi import APIRouter
 import requests
 import logging
 
-colors = APIRouter()
+color = APIRouter()
 
 
-@colors.get("/")
+@color.get("/")
 async def home():
-    return {"message": "home of colors"}
+    return {"message": "home of color"}
 
 
-@colors.get("/dapr/http")
+@color.get("/dapr/http")
 async def random_color():
     """
-    return random color
+    return random color with a raw http request to dapr
     """
     r = requests.get('http://localhost:3500/v1.0/invoke/backend/method/color')
+    color = r.text
     logging.info(r)
-    return {"random color": f'${r}'}
+    return {"random color": f'${color}'}
 
 
 

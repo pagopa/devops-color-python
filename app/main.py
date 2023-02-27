@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from app.routes.colors import colors
+from app.routes.color import color
 from app.routes.status import status_route
 
 
 def include_router(app):
-    app.include_router(colors, prefix='/colors')
+    app.include_router(color, prefix='/color')
     app.include_router(status_route, prefix='/status')
 
 
