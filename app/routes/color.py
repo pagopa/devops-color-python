@@ -23,15 +23,13 @@ async def dapr_http_color():
 
 
 @color.get("/dapr/sdk")
-async def dapr_sdk_color():
+def dapr_sdk_color():
     """
     return random color with a sdk request to dapr
     """
-    with DaprClient() as d:
-        r = d.invoke_method('backend', 'color', "{}")
-        color = r
-        logging.info(r)
-
+    d = DaprClient()
+    color = d.invoke_method('backend', 'color')
+    logging.info(color)
     return {"random color": f'{color}'}
 
 
