@@ -27,10 +27,18 @@ def dapr_sdk_color():
     """
     return random color with a sdk request to dapr
     """
-    d = DaprClient()
-    color = d.invoke_method('backend', 'color')
-    logging.info(color)
-    return {"random color": f'{color}'}
+    with DaprClient() as daprClient:
+        result = daprClient.invoke_method(
+            'backend',
+            'color',
+            content_type="utf-8",
+            data=b'',
+            http_verb="GET")
+
+    color = result.data.decode("utf-8")
+
+    logging.info(str(color))
+    return {"random color": f'{str(color)}'}
 
 
 
