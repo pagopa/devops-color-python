@@ -3,3 +3,4 @@ uvicorn
 pyyaml
 unidecode
 requests
+dapr
