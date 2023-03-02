@@ -1,5 +1,17 @@
-import os
 from fastapi import FastAPI
+from app.routes.color import color
+from app.routes.status import status_route
+
+
+def include_router(app):
+    app.include_router(color, prefix='/color')
+    app.include_router(status_route, prefix='/status')
+
+
+def configure_application(app):
+    include_router(app)
+    return app
+
 
 app = FastAPI()
 
@@ -9,19 +21,5 @@ async def home_root():
     return {"home_root": "ok"}
 
 
-@app.get("/api")
-async def api():
-    my_configmap_value = os.getenv("MY_CONFIGMAP_VALUE")
-    my_secret_value = os.getenv("MY_SECRET_VALUE")
+configure_application(app)
 
-    api_values = {
-        "my_configmap_value" : my_configmap_value,
-        "my_secret_value" : my_secret_value
-    }
-
-    return api_values
-
-
-@app.get("/status")
-async def status():
-    return {"status": "ok"}
