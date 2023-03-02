@@ -4,3 +4,4 @@ pyyaml
 unidecode
 requests
 dapr
+python-random-strings

@@ -1,6 +1,9 @@
 from fastapi import APIRouter
 import logging
 from dapr.clients import DaprClient
+from python_random_strings import random_strings
+import uuid
+
 
 cosmosdb = APIRouter()
 
@@ -10,27 +13,15 @@ async def home():
     return {"message": "home of cosmosdb"}
 
 
-@cosmosdb.post("/dapr/sdk")
+@cosmosdb.get("/dapr/sdk")
 def dapr_sdk_cosmosdb():
     """
-    return random cosmosdb with a sdk request to dapr
+    create random value in cosmosdb with a sdk
     """
     with DaprClient() as daprClient:
-        result = daprClient.save_state("cosmosdb", [
-            {
-                "key": "order_1",
-                "value": 1
-            },
-            {
-                "key": "order_2",
-                "value": 2
-            }
-        ])
+        result = daprClient.save_state(store_name="cosmosdb", key=random_strings.random_lowercase(6), value=uuid.uuid4())
 
-    cosmosdb = result.data.decode("utf-8")
-
-    logging.info(str(cosmosdb))
-    return {"random cosmosdb": f'{str(cosmosdb)}'}
+    return {"random string": f'{result}'}
 
 
 
