@@ -19,7 +19,7 @@ def dapr_sdk_cosmosdb():
     create random value in cosmosdb with a sdk
     """
     with DaprClient() as daprClient:
-        result = daprClient.save_state(store_name="cosmosdb", key=random_strings.random_lowercase(6), value=uuid.uuid4())
+        result = daprClient.save_state(store_name="cosmosdb", key=random_strings.random_lowercase(6), value=str(uuid.uuid4()))
 
     return {"random string": f'{result}'}
 
